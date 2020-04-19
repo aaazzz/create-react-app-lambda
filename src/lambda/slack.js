@@ -1,6 +1,7 @@
 import axios from 'axios'
-const slackURL = process.env.SLACK_WEBHOOK_URL || 'https://hooks.slack.com/services/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'
-console.log(slackURL)
+console.log('NODE_ENV', process.env.NODE_ENV)
+console.log('SLACK_URL', process.env.SLACK_WEBHOOK_URL)
+const slackURL = process.env.SLACK_WEBHOOK_URL
 export async function handler(event, context, callback) {
   if (event.httpMethod !== 'POST') {
     return callback(null, {
@@ -11,7 +12,6 @@ export async function handler(event, context, callback) {
   const data = event.body
   try {
     const response = await axios.post(slackURL, data)
-    console.log(response)
     return {
       statusCode: 200,
       body: JSON.stringify({ msg: data.joke })
